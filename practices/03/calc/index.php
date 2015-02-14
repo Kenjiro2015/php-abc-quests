@@ -1,6 +1,20 @@
 <?php
-if(isset($_GET['left'])){
-	$answer = $_GET['left'];
+if(isset($_GET['operator'])){
+	switch($_GET['operator']){
+		case '-':
+			$answer = $_GET['left'] - $_GET['right'];
+			break;		
+		case '*':
+			$answer = $_GET['left'] * $_GET['right'];
+			break;		
+		case '/':
+			$answer = $_GET['left'] / $_GET['right'];
+			break;		
+		case '+':
+		default:
+			$answer = $_GET['left'] + $_GET['right'];
+			break;		
+	}
 }else{
 	$answer = 'No Result';
 }
