@@ -1,22 +1,27 @@
 <?php
-if(isset($_GET['operator'])){
-	switch($_GET['operator']){
+$left = isset($_GET['left']) ? $_GET['left'] : null;
+$operator = isset($_GET['operator']) ? $_GET['operator'] : '+';
+$right = isset($_GET['right']) ? $_GET['right'] : null;
+
+if(!is_null($left) && !is_null($right)){
+	switch($operator){
 		case '-':
-			$answer = $_GET['left'] - $_GET['right'];
+			$answer = $left - $right;
 			break;		
 		case '*':
-			$answer = $_GET['left'] * $_GET['right'];
+			$answer = $left * $right;
 			break;		
 		case '/':
-			$answer = $_GET['left'] / $_GET['right'];
+			$answer = $left / $right;
 			break;		
 		case '+':
 		default:
-			$answer = $_GET['left'] + $_GET['right'];
+			$answer = $left + $right;
 			break;		
 	}
+	$result = "{$left}{$operator}{$right} = {$answer}";
 }else{
-	$answer = 'No Result';
+	$result = 'No Result';
 }
 ?>
 <!DOCTYPE html>
@@ -27,16 +32,17 @@ if(isset($_GET['operator'])){
 </head>
 <body>
 <form action = "index.php" method = "GET">
-	<input type="text" name="left" required autofocus/>
+	<input type="text" name="left" value="<?php echo $left; ?>" required autofocus/>
 	<select name="operator">
-		<option valuse="+" selected>+</option>
-		<option valuse="-">-</option>
-		<option valuse="*">*</option>
-		<option valuse="/">/</option>
+		<option valuse="+" <?php if($operator === '+'){echo 'selected';} ?>>+</option>
+		<option valuse="-" <?php if($operator === '-'){echo 'selected';} ?>>-</option>
+		<option valuse="*" <?php if($operator === '*'){echo 'selected';} ?>>*</option>
+		<option valuse="/" <?php if($operator === '/'){echo 'selected';} ?>>/</option>
 	</select>
-	<input type="text" name="right" required/>
+	<input type="text" name="right" value="<?php echo $right; ?>"required/>
 	<input type="submit" value="Calc">
 </form>
-<p><?php echo $answer; ?></p>
+<p><?php echo $result; ?></p>
+
 </body>
 </html>
